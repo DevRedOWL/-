@@ -35,14 +35,14 @@ task12 <- function(){
     num1 <- validate(as.numeric, "clearNumeric")
     num2 <- validate(as.numeric, "clearNumeric")
 
-    cat("Сумма чисел =", num1 + num2);
+    cat("Сумма чисел:", num1 + num2);
 }
 
 # Задание 1.3
 task13 <- function(){
     spd <- validate(as.integer, "vehicleSpeed")
 
-    cat("Преобразованная скорость =", (spd*1000)/3600, "м/с")
+    cat("Преобразованная скорость:S", (spd*1000)/3600, "м/с")
 }
 
 # ================================
@@ -72,12 +72,15 @@ task22 <- function(){
     # Заменяем элемент, индекс которого равен длине вектора
     vector[length(vector)] = NA
 
-    cat(vector)
+    cat("Вектор с замененным последним элементом на NA:",vector)
 }
 
 # Задание 2.3
 task23 <- function(){
+    # Указываем произвольный вектор
+    vector <- c(1, 200, NA, NA, TRUE, 5, NA, 7, NA, 2, -1, 20.0, "TEST")
 
+    cat("Индексы пропущенных элементов:",which(is.na(vector)))
 }
 
 # Задание 2.4
@@ -124,8 +127,8 @@ startTask <- function(arg){
 # startTask("1.2")
 # startTask("1.3")
 # startTask("2.1")
-startTask("2.2")
-# startTask("2.3")
+# startTask("2.2")
+startTask("2.3")
 # startTask("2.4")
 # startTask("2.5")
 # startTask("2.6")
