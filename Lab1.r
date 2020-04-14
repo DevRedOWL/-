@@ -85,7 +85,10 @@ task23 <- function(){
 
 # Задание 2.4
 task24 <- function(){
+    # Указываем произвольный вектор
+    vector <- c(1, 200, NA, NA, TRUE, 5, NA, 7, NA, 2, -1, 20.0, "TEST")
 
+    cat("Число пропущенных элементов:",length(vector[is.na(vector)]))
 }
 
 # Задание 2.5
@@ -128,8 +131,8 @@ startTask <- function(arg){
 # startTask("1.3")
 # startTask("2.1")
 # startTask("2.2")
-startTask("2.3")
-# startTask("2.4")
+# startTask("2.3")
+startTask("2.4")
 # startTask("2.5")
 # startTask("2.6")
 # startTask("2.7")
