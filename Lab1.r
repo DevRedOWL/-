@@ -101,7 +101,20 @@ task25 <- function(){
 
 # Задание 2.6
 task26 <- function(){
+    repeats = 5;        # Количество повторений
+    yearFrom = 2000;    # Год начала отсчета
+    # Генерируем страны
+    countries = c()
+    for(i in c("France", "Italy", "Spain"))
+        countries <- c(countries, rep(i, repeats))
+    # Генерируем года    
+    years = c();
+    for(i in 1:repeats)
+        years[i]=yearFrom+i-1
 
+    # Выводим таблицу
+    table <- data.frame("Страна" = countries, "Год" = years)
+    print(table)
 }
 
 # Задание 2.7
@@ -111,6 +124,7 @@ task27 <- function(){
 
 # Метод запуска задания
 startTask <- function(arg){
+    cat('\n');
     shell("cls");
     switch(
       arg, 
@@ -136,6 +150,6 @@ startTask <- function(arg){
 # startTask("2.2")
 # startTask("2.3")
 # startTask("2.4")
-startTask("2.5")
-# startTask("2.6")
+# startTask("2.5")
+startTask("2.6")
 # startTask("2.7")
