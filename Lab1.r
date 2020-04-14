@@ -104,4 +104,13 @@ startTask <- function(arg){
 }
 
 # Непосредственно запуск задания
-startTask("1.1")
+# startTask("1.1")
+# startTask("1.2")
+# startTask("1.3")
+# startTask("2.1")
+# startTask("2.2")
+# startTask("2.3")
+# startTask("2.4")
+# startTask("2.5")
+# startTask("2.6")
+# startTask("2.7")
