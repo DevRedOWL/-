@@ -67,7 +67,12 @@ task21 <- function(){
 
 # Задание 2.2
 task22 <- function(){
+    # Указываем произвольный вектор
+    vector <- c(1, 200, 0, TRUE, 5, 6, 7, NA, 2, -1, 20.0, "TEST")
+    # Заменяем элемент, индекс которого равен длине вектора
+    vector[length(vector)] = NA
 
+    cat(vector)
 }
 
 # Задание 2.3
@@ -118,8 +123,8 @@ startTask <- function(arg){
 # startTask("1.1")
 # startTask("1.2")
 # startTask("1.3")
-startTask("2.1")
-# startTask("2.2")
+# startTask("2.1")
+startTask("2.2")
 # startTask("2.3")
 # startTask("2.4")
 # startTask("2.5")
