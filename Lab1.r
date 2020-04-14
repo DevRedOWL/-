@@ -107,7 +107,7 @@ startTask <- function(arg){
 # startTask("1.1")
 # startTask("1.2")
 # startTask("1.3")
-# startTask("2.1")
+startTask("2.1")
 # startTask("2.2")
 # startTask("2.3")
 # startTask("2.4")
