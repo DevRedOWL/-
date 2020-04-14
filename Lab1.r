@@ -93,7 +93,12 @@ task24 <- function(){
 
 # Задание 2.5
 task25 <- function(){
+    amount = 100;
+    vector <- c()
+    for(c in 1:amount)
+        vector[c]=c
 
+    cat("Вектор со", amount, "уникальными значениями:", vector)
 }
 
 # Задание 2.6
@@ -132,7 +137,7 @@ startTask <- function(arg){
 # startTask("2.1")
 # startTask("2.2")
 # startTask("2.3")
-startTask("2.4")
-# startTask("2.5")
+# startTask("2.4")
+startTask("2.5")
 # startTask("2.6")
 # startTask("2.7")
