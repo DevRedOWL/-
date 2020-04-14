@@ -119,12 +119,21 @@ task26 <- function(){
 
 # Задание 2.7
 task27 <- function(){
+    income <- c(10000, 32000, 28000, 150000, 65000, 1573)
+    average = sum(income) / length(income)
 
+    # Производим замену
+    income_class <- replace(temp <- replace(income, income < average, 0), temp >= average, 1) 
+
+    cat("Вектор income_class:", income_class)
 }
 
-# Метод запуска задания
+# ================================
+#          Запуск задания
+# ================================
+
+# Метод запуска заданияS
 startTask <- function(arg){
-    cat('\n');
     shell("cls");
     switch(
       arg, 
@@ -151,5 +160,5 @@ startTask <- function(arg){
 # startTask("2.3")
 # startTask("2.4")
 # startTask("2.5")
-startTask("2.6")
-# startTask("2.7")
+# startTask("2.6")
+startTask("2.7")
