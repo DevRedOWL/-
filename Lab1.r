@@ -51,7 +51,18 @@ task13 <- function(){
 
 # Задание 2.1
 task21 <- function(){
+    vector <- c(1, 0, 2, 3, 6, 8, 12, 15, 0, NA, NA, 9, 4, 16, 2, 0)
 
+    cat('Первый элемент:                ', vector[1], '\n')
+    cat('Последний элемент:             ', vector[length(vector)], '\n')
+    cat('Элементы с 3 по 5:             ', vector[3:5], '\n')
+    cat('Элементы равные 2:             ', vector[vector==2], '\n')
+    cat('Элементы больше 4:             ', vector[vector>4], '\n')
+    cat('Элементы кратные 3:            ', vector[vector%%2 == 0], '\n')
+    cat('Элементы кратные 3 и больше 4: ', vector[vector>4 & vector%%2==0], '\n')
+    cat('Элементы меньше 1 или больше 5:', vector[vector<1 | vector>5], '\n')
+    cat('Индексы равных 0:              ', which(vector==0), '\n')
+    cat('Индексы не меньше 2 и больше 8:', which(vector>=2 & vector<8), '\n')
 }
 
 # Задание 2.2
