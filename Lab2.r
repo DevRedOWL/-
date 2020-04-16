@@ -54,17 +54,30 @@ task4 <- function(){
 
 # Задание 5
 task5 <- function(){
-  
+    turnout <- c(100, 124, 121, 130, 150, 155, 144, 132, 189, 145, 125, 110, 118, 129, 127)
+
+    strangeCount <- which(turnout%%5==0)
+    cat("Индексы подозрительных участков:", strangeCount, "\n")
+    
+    result = round((length(strangeCount) / length(turnout)) * 100, 2)
+    cat("Доля подозрительных участков:", result)
+    cat("%")
 }
 
 # Задание 6
 task6 <- function(){
+    z <- c(8, NA, 7, 10, NA, 15, NA, 0, NA, NA, 87)
     
+    cat("Индексы пропущенных элементов:",which(is.na(z)));
 }
 
 # Задание 7
 task7 <- function(){
-   
+    s <- c("4,5", "6,8", "9,2", "1,75")
+
+    s <- as.numeric(sub(",", ".", s));
+    
+    cat("Вектор s преобразован в", class(s))
 }
 
 # Задание 8
@@ -100,5 +113,5 @@ startTask <- function(arg){
 # startTask("4")
 # startTask("5")
 # startTask("6")
-# startTask("7")
+startTask("7")
 # startTask("8")
