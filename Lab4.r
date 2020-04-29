@@ -54,10 +54,38 @@ task1 <- function(){
 
     # Пойдем рисовать графики!
     library(ggplot2)
-    genreplot <- ggplot(df2, aes(x=user_rating, y=factor(prime_genre))) + geom_boxplot()
-    ratingplot  <- ggplot(df2, aes(x=price, y=factor(user_rating))) + geom_boxplot()
-    print(ratingplot)
-    # print(genreplot)
+    wplot1 <- ggplot(df2, aes(x=size_bytes, y=factor(price))) + geom_boxplot()
+    # Распределение более дешевых приложений хаотично
+    wplot2 <- ggplot(df2, aes(x=price, y=factor(prime_genre))) + geom_boxplot()
+    # Много приложений стоят до 25$ но редкие сущности могут иметь стоимость значительно выше, слишком дорогие неободимо исключать
+    wplot3 <- ggplot(df2, aes(x=rating_count_tot, y=factor(user_rating))) + geom_boxplot()
+    # Интересная получается ситуация, по графику можно сделать вывод, что, как правильно, большинство приложений
+    # имеют достаточно низкое количество оцениваний и для объективной оценки взаимосвязи рейтинга и количества оцениваний
+    # необходимо выбирать группы однородных данных
+    wplot4 <- ggplot(df2, aes(x=user_rating, y=factor(prime_genre))) + geom_boxplot()
+    wplot5 <- ggplot(df2, aes(x=lang_num, y=factor(user_rating))) + geom_boxplot()
+    # Более дорогие приложения имеют большее число локализаций
+    # print(wplot5)
+
+    # Пирожковые диаграммы
+    # pie1 <- pie(table(df2$user_rating), main="Не очень интересная диаграмма рейтингов")
+    # pie2 <- pie(table(df2$prime_genre), main="Не очень интересная диаграмма жанров")
+    # print(pie2)
+
+    # Нормальное распределение
+    hist(df2$size_bytes, freq = FALSE); curve(dnorm(x, mean(df2$size_bytes), sd = sd(df2$size_bytes)), add = TRUE)
+    # Чаще встречаются приложения с маленьким весом
+    hist(df2$price, freq = FALSE); curve(dnorm(x, mean(df2$price), sd = sd(df2$price)), add = TRUE)
+    # Подавляющее число приложений - бесплатные
+    hist(df2$rating_count_tot, freq = FALSE); curve(dnorm(x, mean(df2$rating_count_tot), sd = sd(df2$rating_count_tot)), add = TRUE)
+    # Не так много приложений были оценены пользователями
+    hist(df2$user_rating, freq = FALSE); curve(dnorm(x, mean(df2$user_rating), sd = sd(df2$user_rating)), add = TRUE)
+    # Большинство отзывов колеблется на уровне 4.5 звезд, не ниже благодаря модерации магазина и политике Apple,
+    # а не 5, вероятно из за психологической отметки не позволяющей поставить высший балл
+    hist(df2$lang_num, freq = FALSE); curve(dnorm(x, mean(df2$lang_num), sd = sd(df2$lang_num)), add = TRUE)
+    # Не часто приложения локализуются для более, чем 5 языков, но значительно реже встречается локализация 20 и более
+
+    
 }
 
 # Задание 2
