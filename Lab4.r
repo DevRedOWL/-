@@ -6,8 +6,10 @@
 task1 <- function(){
     # С болью читаем чертов эксель
     library("readxl")
-    path <- file.path("C:","R-epo","data-l4")
-    setwd("C:\\Users\\vdape\\Desktop\\ВШЭ\\2 курс\\Не рычи на меня\\data-l4")
+    # Пришлось сделать 2 пути, т.к. работаю с двух разных устройств
+    pathPC <- file.path("C:","R-epo","data-l4")
+    pathLT <- file.path("C:","Users","vdape","Desktop","ВШЭ","2 курс","Не рычи на меня","data-l4")
+    setwd(pathLT)
     df <- read_excel("AppleStore.xlsx")
 
     # Чистим от ид и валюты
@@ -32,7 +34,7 @@ task1 <- function(){
     # Всякие там коэфициенты
     # install.packages(c("moments")) 
     library(moments)
-    
+
     analysis <- data.frame()
     for(c in 1:length(df2))
       if(is.numeric(df2[[c]])){
@@ -46,9 +48,16 @@ task1 <- function(){
         # var() - Дисперсия, sd() - Станд. отклонение     
       }
     print(analysis)
+    # Соглано данным о коэфициентах вариации, информация неоднородна
+    # Эксцесс всех полей больше нуля, следовательно все графики островершинны
+    # Коэфициенты ассиметрии всех графиков, кроме пользовательского рейтинга больше нуля, значит их левый хвост длиннее
 
-
-
+    # Пойдем рисовать графики!
+    library(ggplot2)
+    genreplot <- ggplot(df2, aes(x=user_rating, y=factor(prime_genre))) + geom_boxplot()
+    ratingplot  <- ggplot(df2, aes(x=price, y=factor(user_rating))) + geom_boxplot()
+    print(ratingplot)
+    # print(genreplot)
 }
 
 # Задание 2
