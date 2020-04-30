@@ -7,9 +7,9 @@ task1 <- function(){
     # С болью читаем чертов эксель
     library("readxl")
     # Пришлось сделать 2 пути, т.к. работаю с двух разных устройств
-    pathPC <- file.path("C:","R-epo","data-l4")
+    pathPC <- file.path("C:","Projects","R-epo","data-l4")
     pathLT <- file.path("C:","Users","vdape","Desktop","ВШЭ","2 курс","Не рычи на меня","data-l4")
-    setwd(pathLT)
+    setwd(pathPC)
     df <- read_excel("AppleStore.xlsx")
 
     # Чистим от ид и валюты
