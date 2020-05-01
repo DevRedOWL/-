@@ -3,6 +3,13 @@
 # ================================
 
 # Задание 1
+
+# Метод для получения моды 
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
 task1 <- function(){
     # С болью читаем чертов эксель
     library("readxl")
@@ -65,12 +72,11 @@ task1 <- function(){
     wplot4 <- ggplot(df2, aes(x=user_rating, y=factor(prime_genre))) + geom_boxplot()
     wplot5 <- ggplot(df2, aes(x=lang_num, y=factor(user_rating))) + geom_boxplot()
     # Более дорогие приложения имеют большее число локализаций
-    # print(wplot5)
+    print(wplot5)
 
     # Пирожковые диаграммы
-    # pie1 <- pie(table(df2$user_rating), main="Не очень интересная диаграмма рейтингов")
-    # pie2 <- pie(table(df2$prime_genre), main="Не очень интересная диаграмма жанров")
-    # print(pie2)
+    pie(table(df2$user_rating), main="Не очень интересная диаграмма рейтингов")
+    pie(table(df2$prime_genre), main="Не очень интересная диаграмма жанров")
 
     # Нормальное распределение
     hist(df2$size_bytes, freq = FALSE); curve(dnorm(x, mean(df2$size_bytes), sd = sd(df2$size_bytes)), add = TRUE)
@@ -85,8 +91,65 @@ task1 <- function(){
     hist(df2$lang_num, freq = FALSE); curve(dnorm(x, mean(df2$lang_num), sd = sd(df2$lang_num)), add = TRUE)
     # Не часто приложения локализуются для более, чем 5 языков, но значительно реже встречается локализация 20 и более
 
+    genreMode <- Mode(df2$prime_genre)
+    cat("\nСамый популярный жанр:", genreMode, "\n\n")
+    # Самым популярным жанром оказались игры
+
+    # Создаем сабсет из самого популярного жанра
+    library("dplyr")
+    df3 <- filter(df2, prime_genre == genreMode) 
+    df3sum <- summary(subset(df3, select = c(price, user_rating, lang_num, size_bytes)))
+    print(df3sum)
+    # Выводы:
+    # Средняя цена остается схожей с полной выборкой, но медианная равна нулю долларов, 
+    # так же самое дорогое приложение в 4 раза дешевле самого дорогого приложения в полной выборке
+    # Со средним значением рейтинга так же ситуация, Медианное на 0.5 выше чем, в полной
+    # Количество локализаций в играх в среднем меньше, чем в других приложениях, 
+    # большинство игр имеют только 1 язык
     
-}
+    # Можно вывести статистику по группам в соответствии со столбцом
+    # print(describeBy(df2$price, group = df2$prime_genre))
+    
+    KSGroups <- data.frame()
+    for(genreGroup in levels(factor(df2$prime_genre))){
+      # Делаем выборку из df2 по этому жанру
+      thisFrame <- df2[df2$prime_genre == genreGroup,]
+      # Находим среднее значение и стандартное отклонение
+      thisMean <- mean(thisFrame$price)
+      thisSd <- sd(thisFrame$price)
+      # Считаем по Колмогорову-Смирнову
+      result <- ks.test(thisFrame$price, "pnorm", thisMean, thisSd)
+      
+      # print(result)
+      # print(names(result)[2])
+      # print(result[[2]])
+
+      # names(x)
+      # for(KSPID in 1:length(result)){           
+      #    Some <- cbind(Some, rbind(), result[[KSPID]])
+      # } 
+      # for(KSPID in 1:length(result)){           
+      #   Some <- cbind(Some, rbind(), result[[KSPID]]))
+      # } 
+      # Some[names(result[1])] <- 1;
+      # print(Some)
+
+      # for(KSPID in 1:length(result)){     
+      #   Some <- с(Some, t(c(names(result[KSPID]),result[[KSPID]])))
+      #   # Some <- cbind(Some, rbind(), result[[KSPID]]))
+      # } 
+      
+      KSGroups <- rbind(KSGroups, unlist(result, use.names = FALSE))
+      colnames(KSGroups) <- names(result)
+
+      # KSGroups <- rbind(KSGroups, data.frame(
+      #   as.character(names(result[1])) = result[[1]]
+      # ))
+
+      
+    }
+    View(KSGroups)
+} 
 
 # Задание 2
 task2 <- function(){
@@ -102,9 +165,10 @@ task3 <- function(){
 #          Запуск задания
 # ================================
 
-# Метод запуска заданияS
+# Метод запуска задания
+clear <- function() cat(rep("\n", 50))
 startTask <- function(arg){
-    shell("cls");
+    clear();
     switch(
       arg, 
       "1" = task1(),
