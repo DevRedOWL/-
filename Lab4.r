@@ -112,23 +112,31 @@ task1 <- function(){
     
     # Составляю датасет для групп по различным критериям
     KSGroups <- data.frame()
+    SWGroups <- data.frame()
     for(genreGroup in levels(factor(df2$prime_genre))){
       # Делаем выборку из df2 по этому жанру
       thisFrame <- df2[df2$prime_genre == genreGroup,]
+
       # Находим среднее значение и стандартное отклонение
       thisMean <- mean(thisFrame$price)
       thisSd <- sd(thisFrame$price)
-      # Считаем по Колмогорову-Смирнову
-      result <- ks.test(thisFrame$price, "pnorm", thisMean, thisSd)
-      # print(result)   
 
+      # Считаем по критерию Колмогорова-Смирнова
+      KHresult <- ks.test(thisFrame$price, "pnorm", thisMean, thisSd) # print(KHresult)   
       # На исследование того, как реализовать табличку ниже правильно ушло часа 3, пытался циклами и прочим
       # А почему R? Питон с pandas лучше справляется с подобными задачами, и синтаксис там адекватнее.
       # Выводим критерии по всем категориям в удобном формате
-      KSGroups <- rbind(KSGroups, c(genreGroup ,unlist(result), use.names = FALSE))
-      colnames(KSGroups) <- c("Genre", names(result))     
+      KSGroups <- rbind(KSGroups, c(genreGroup ,unlist(KHresult), use.names = FALSE))
+      colnames(KSGroups) <- c("Genre", names(KHresult))    
+
+      # Считаем по критерию Шапиро-Уилка
+      SWresult <- shapiro.test(thisFrame$price)
+      SWGroups <- rbind(SWGroups, c(genreGroup ,unlist(SWresult), use.names = FALSE))
+      colnames(SWGroups) <- c("Genre", names(SWresult))  
     }
-    View(KSGroups)
+    # Сводим две таблицы в одну
+    KSSWGroups = subset(merge(KSGroups, SWGroups, suffixes = c(".KS",".SW"), by=c("Genre", "data.name")), select = -c(method.KS, method.SW))
+    View(KSSWGroups)
 } 
 
 # Задание 2
