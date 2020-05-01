@@ -110,6 +110,7 @@ task1 <- function(){
     # Можно вывести статистику по группам в соответствии со столбцом
     # print(describeBy(df2$price, group = df2$prime_genre))
     
+    # Составляю датасет для групп по различным критериям
     KSGroups <- data.frame()
     for(genreGroup in levels(factor(df2$prime_genre))){
       # Делаем выборку из df2 по этому жанру
@@ -119,34 +120,13 @@ task1 <- function(){
       thisSd <- sd(thisFrame$price)
       # Считаем по Колмогорову-Смирнову
       result <- ks.test(thisFrame$price, "pnorm", thisMean, thisSd)
-      
-      # print(result)
-      # print(names(result)[2])
-      # print(result[[2]])
+      # print(result)   
 
-      # names(x)
-      # for(KSPID in 1:length(result)){           
-      #    Some <- cbind(Some, rbind(), result[[KSPID]])
-      # } 
-      # for(KSPID in 1:length(result)){           
-      #   Some <- cbind(Some, rbind(), result[[KSPID]]))
-      # } 
-      # Some[names(result[1])] <- 1;
-      # print(Some)
-
-      # for(KSPID in 1:length(result)){     
-      #   Some <- с(Some, t(c(names(result[KSPID]),result[[KSPID]])))
-      #   # Some <- cbind(Some, rbind(), result[[KSPID]]))
-      # } 
-      
-      KSGroups <- rbind(KSGroups, unlist(result, use.names = FALSE))
-      colnames(KSGroups) <- names(result)
-
-      # KSGroups <- rbind(KSGroups, data.frame(
-      #   as.character(names(result[1])) = result[[1]]
-      # ))
-
-      
+      # На исследование того, как реализовать табличку ниже правильно ушло часа 3, пытался циклами и прочим
+      # А почему R? Питон с pandas лучше справляется с подобными задачами, и синтаксис там адекватнее.
+      # Выводим критерии по всем категориям в удобном формате
+      KSGroups <- rbind(KSGroups, c(genreGroup ,unlist(result), use.names = FALSE))
+      colnames(KSGroups) <- c("Genre", names(result))     
     }
     View(KSGroups)
 } 
